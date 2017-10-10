@@ -1,0 +1,6 @@
+(define (problem testCase1)
+  (:domain CarsIntersection)
+  (:objects c1 c2 i)
+  (:init (Car c1) (Car c2) (Intersection i) (Reach c1 4) (Reach c2 4) (Has c1 3) (Has c2 3))
+  (:goal (and (Passed c1) (Passed c2)))
+)
