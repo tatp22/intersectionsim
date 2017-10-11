@@ -38,6 +38,10 @@ class Car:
     #See paper. This reserves a space in the intersection
     pass
 
+def moveCars(i):
+  '''Moves each car their respective speeds in the intersection'''
+  for i in range
+
 def spawnCar(i):
   '''Spawns cars into the intersection at random'''
   c = Car()
@@ -86,9 +90,11 @@ def runSimulator(i):
   T = 1000
   # continue simulation for T time steps
   while t < T:
+    moveCars(i)
     spawnCar(i)
     carReserve(i)
     adjustSpeeds(i)
+    printInfo(i)
 
 def main():
   '''Starts Simulation'''
