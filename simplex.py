@@ -170,9 +170,9 @@ def getStoplight(t,dirArr,stopTime):
     '''0/2 go first, then 1/3'''
     ret = 0
     for i in range(len(t)):
-        if ...:
+        if (t[i][0]//stopTime)%2 != dirArr[i//2]%2:
             '''can't go thru has to wait'''
-            ....
+            ret += (((t[i][0]//stopTime)+1)*stopTime+10)
         else:
             '''can go thru'''
             ret += t[i][0]
@@ -263,7 +263,7 @@ def testOneCase(cars,case):
     c.fill(1)
     t_bounds,dirArr = makeTBounds(vMax,vMin,case)
     overpass = getOverpass(t_bounds)
-    stoplight = getStoplight(t_bounds,dirArr,10)
+    stoplight = getStoplight(t_bounds,dirArr,20)
     orderOfInt = getOrder(t_bounds)
     A,cArr = getA(t_bounds,vMax,vMin,orderOfInt,numCars,dirArr)
     b = getB(t_bounds,vMax,vMin,orderOfInt,numCars,cArr)
@@ -282,37 +282,46 @@ def testOneCase(cars,case):
 def makeNorm(times):
     '''Norm the times to one'''
     ret = []
+    ret2= []
     for i in range(len(times)):
         ret.append(times[i][0]/times[i][1])
-    return ret
+        ret2.append(times[i][2]/times[i][1])
+    return ret,ret2
 
-def plot(t):
+def plot(t,stopTimes):
     '''fancy bar plotter'''
     N = len(t)
     thresh = 1
     values = np.array(t)
+    stopVal = np.array(stopTimes)
     
     above_threshold = np.maximum(values - thresh, 0)
     below_threshold = np.minimum(values, thresh)
     
+    above_stop = np.maximum(stopVal - thresh, 0)
+    below_stop = np.minimum(stopVal, thresh)
+    
     ind = np.arange(N)
     width = .4
     fig, ax = plt.subplots()
-    ax.bar(ind, below_threshold, width, color="g")
-    ax.bar(ind, above_threshold, width, color="r",bottom=below_threshold)
+    rects1 = ax.bar(ind, below_threshold, width, color="g")
+    rects2 = ax.bar(ind, above_threshold, width, color="r",bottom=below_threshold)
+    rects3 = ax.bar(ind+width,below_stop, width, color="g")
+    rects4 = ax.bar(ind+width,above_stop, width, color="y",bottom=below_threshold)
     
     ax.set_ylabel('Fraction Of Time Over Overpass')
     ax.set_title('Time Lost With Intersection Over Overpass')
-    ax.set_xticks(ind)
+    ax.set_xticks(ind+width/2)
     ax.set_xticklabels(('Two',
                         'Three Cars', 
                         'Four Cars', 
                         'Cars Made to hit', 
                         'Real Life Complex Intersection'))
 
-    #ax.legend((rects1[0], rects2[0]), ('No Stoplight', 'Stoplight'))
+    ax.legend((above_threshold[0], below_threshold[0], below_stop[0]),
+              ('Overpass'        , 'AI Intersection' , 'Stoplight'))
     
-    ax.plot([-1., 4.5], [thresh, thresh], "k--")
+    ax.plot([0, 4.5], [thresh, thresh], "k--")
     plt.show() 
     
 
@@ -322,7 +331,7 @@ def main():
     times = []
     for i in range(len(cars)):
         times.append(testOneCase(cars[i],case[i]))
-    normTimes = makeNorm(times)
-    plot(normTimes)
+    normTimes,stopTimes = makeNorm(times)
+    plot(normTimes,stopTimes)
 
 main()
