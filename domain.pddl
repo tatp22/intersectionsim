@@ -23,13 +23,13 @@
     
     (:action MoveTwo
         :parameters (?car1 ?car2 ?i)
-        :precondition (and (Car ?car1) (Car ?car2) (Intersection i) (not (= (speed ?car1) 0)) (not (= (speed ?car2) 0)) (not (= (t ?car1 ?i) (t ?car2 ?i))))
+        :precondition (and (Car ?car1) (Car ?car2) (not(= ?car1 ?car2)) (Intersection i) (not (= (speed ?car1) 0)) (not (= (speed ?car2) 0)) (not (= (t ?car1 ?i) (t ?car2 ?i))))
         :effect (and (decrease (t ?car1 ?i) 1) (decrease (t ?car2 ?i) 1))
     )
 
     (:action MoveOne
         :parameters (?car1 ?car2 ?i)
-        :precondition (and (Car ?car1) (Car ?car2) (Intersection i) (= (speed ?car1) 0) (not (= (speed ?car2) 0)))
+        :precondition (and (Car ?car1) (Car ?car2) (not(= ?car1 ?car2)) (Intersection i) (= (speed ?car1) 0) (not (= (speed ?car2) 0)))
         :effect (decrease (t ?car2 ?i) 1)
     )
 
