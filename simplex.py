@@ -318,8 +318,8 @@ def plot(t,stopTimes):
                         'Cars Made to hit', 
                         'Real Life Complex Intersection'))
 
-    ax.legend((above_threshold[0], below_threshold[0], below_stop[0]),
-              ('Overpass'        , 'AI Intersection' , 'Stoplight'))
+    ax.legend((rects1[0], rects2[0], rects4[0]),
+              ('Overpass', 'AI Intersection','Simulated Stoplight'))
     
     ax.plot([0, 4.5], [thresh, thresh], "k--")
     plt.show() 
