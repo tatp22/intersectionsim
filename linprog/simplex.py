@@ -296,6 +296,9 @@ def getOrder(t):
 
 def getA(t_bounds,vMax,vMin,tiles,numCars):
     '''Constructs A matrix'''
+
+    # Get the width for the matrix, this should be equal to the number of
+    # tiles, which is the number of entries in t_bounds that are not "new cars"
     width = 0
     for el in t_bounds:
         if not el == "new car":
@@ -305,28 +308,36 @@ def getA(t_bounds,vMax,vMin,tiles,numCars):
     currRow = 0
 
     # Constraint 3: Correct way of crossing the intersection (doesn't go backwards)
-    x = 0
+    offset = 0
     for r in range(0, len(t_bounds), 2):
         if t_bounds[r] == "new car":
-            x += 1
+            #the column of interest shifts one to the right if it concerns a new car
+            offset += 1
         else:
-            c = currRow+x
+            column = currRow+offset
+
+            #construct a new row t_i,k - t_i,l
             row = [0] * width
-            row[c] = 1
-            row[c+1] = -1
-            A.append(row)
+            row[column] = 1
+            row[column+1] = -1
             currRow += 1
+
+            #add the row to the A matrix
+            A.append(row)
 
     # Constraint 4: tile can't be occupied by multiple cars at the time
     for i in range(len(tiles)):
         for j in range(i+1,len(tiles)):
             for k in range(len(tiles[i])):
                 if tiles[i][k] in tiles[j]:
+                    #construct a new row t_i,k != t_j,k
                     row = [0] * width
                     row[k] = 1
                     row[tiles[j][tiles[j].index(tiles[i][k])]] = -1
-                    A.append(row)
                     currRow += 1
+
+                    #add the row to the A matrix
+                    A.append(row)
 
     return A
 
@@ -338,6 +349,7 @@ def getB(t_bounds,vMax,vMin,tiles,numCars):
     x = 0
     for r in range(0, len(t_bounds), 2):
         if t_bounds[r] == "new car":
+            #the column of interest shifts one to the right if it concerns a new car
             x += 1
         else:
             b.append(0)
