@@ -2,16 +2,6 @@ import numpy as np
 from scipy.optimize import linprog
 import matplotlib.pyplot as plt
 
-'''
-Intersection:
-0 1
-3 2
-
-Maximize:
--sum(t)
-where t is the vector of times for each car and when it will hit the intersection
-constraints:
-'''
 def getPosT(i,j):
     '''Gets the position in the t vector'''
     return i*4+j
@@ -172,7 +162,7 @@ def getStoplight(t,dirArr,stopTime):
     for i in range(len(t)):
         if (t[i][0]//stopTime)%2 != dirArr[i//2]%2:
             '''can't go thru has to wait'''
-            ret += (((t[i][0]//stopTime)+1)*stopTime+10)
+            ret += (((t[i][0]//stopTime)+1)*stopTime+10) # +10 is to simulate slowing down and speeding up again
         else:
             '''can go thru'''
             ret += t[i][0]
@@ -252,6 +242,12 @@ def getB(t_bounds,vMax,vMin,orderOfInt,numCars,cArr):
             b.append(-1)
         
     return b
+    
+def printCarTimes(t,dirs,t_bounds):
+    '''Prints the times that each car reached the intersection'''
+    for i in range(len(t)//2):
+        print("Car {0:02d}, direction {1}: Time = {2:.2f}, Ideal = {3:.2f}".format(i+1,dirs[i],t[2*i],t_bounds[2*i][0]))
+    print()
 
 def testOneCase(cars,case):
     '''Test one case for the cars, returns the min function value'''
@@ -263,20 +259,16 @@ def testOneCase(cars,case):
     c.fill(1)
     t_bounds,dirArr = makeTBounds(vMax,vMin,case)
     overpass = getOverpass(t_bounds)
-    stoplight = getStoplight(t_bounds,dirArr,20)
+    stoplight = getStoplight(t_bounds,dirArr,20) #20 Second Stoplights
     orderOfInt = getOrder(t_bounds)
     A,cArr = getA(t_bounds,vMax,vMin,orderOfInt,numCars,dirArr)
     b = getB(t_bounds,vMax,vMin,orderOfInt,numCars,cArr)
+    t_bounds_before = t_bounds
     t_bounds = tuple(t_bounds)
-    '''
-    print(len(A),len(A[0]),len(b),len(c))
-    print(A)
-    print(b)
-    print(c)
-    print(t_bounds)
-    '''
     res = linprog(c,A,b,bounds=t_bounds,options={"disp":False})
-    #print(res)
+    carTimes = res["x"]
+    print("Case :", case)
+    printCarTimes(carTimes,dirArr,t_bounds)
     return res["fun"],overpass,stoplight
     
 def makeNorm(times):
@@ -304,9 +296,9 @@ def plot(t,stopTimes):
     ind = np.arange(N)
     width = .4
     fig, ax = plt.subplots()
-    rects1 = ax.bar(ind, below_threshold, width, color="g")
+    rects1 = ax.bar(ind, below_threshold, width, color="r")
     rects2 = ax.bar(ind, above_threshold, width, color="r",bottom=below_threshold)
-    rects3 = ax.bar(ind+width,below_stop, width, color="g")
+    rects3 = ax.bar(ind+width,below_stop, width, color="y")
     rects4 = ax.bar(ind+width,above_stop, width, color="y",bottom=below_threshold)
     
     ax.set_ylabel('Fraction Of Time Over Overpass')
@@ -317,11 +309,12 @@ def plot(t,stopTimes):
                         'Four Cars', 
                         'Cars Made to hit', 
                         'Real Life Complex Intersection'))
+                        
+    rects = ax.plot([-.2, 4.6], [thresh, thresh], "k--")
 
-    ax.legend((rects1[0], rects2[0], rects4[0]),
-              ('Overpass', 'AI Intersection','Simulated Stoplight'))
+    ax.legend((rects[0], rects2[0], rects4[0]),
+              ("Overpass Effeciency", 'AI Intersection','Simulated Stoplight'))
     
-    ax.plot([0, 4.5], [thresh, thresh], "k--")
     plt.show() 
     
 
