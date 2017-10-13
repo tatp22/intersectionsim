@@ -8,17 +8,22 @@ def getPosT(i,j):
 
 def makeTBounds(vMax,vMin,case):
     '''Returns tuple of tuples of each (min,max) bounds'''
+    # Array of constraints 1) and 2)
     ret = []
+    # Array representing the directions of the cars by an index 0-3
     dirArr = []
+    # Array of arrays containing the tiles (in order) the car will travel on
     tiles = []
 
     if case == "simple":
         '''Simple Scenario, 2 cars going to hit at same time. One will slow down'''
+        #car 1
         ret.append((1600.05/vMax,1600.05/vMin))
         ret.append((1600.55/vMax,1600.55/vMin))
         tiles.append([1,2])
         dirArr.append(0)
 
+        #car 2
         ret.append('new car')
         ret.append((1600.0/vMax,1600.0/vMin))
         ret.append((1600.5/vMax,1600.5/vMin))
