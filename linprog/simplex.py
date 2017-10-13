@@ -11,7 +11,6 @@ def makeTBounds(vMax,vMin,case):
     ret = []
     dirArr = []
     tiles = []
-    matrixHeight = 0
 
     if case == "simple":
         '''Simple Scenario, 2 cars going to hit at same time. One will slow down'''
@@ -26,152 +25,227 @@ def makeTBounds(vMax,vMin,case):
         tiles.append([3,2])
         dirArr.append(1)
 
-        matrixHeight = 3
+    if case == "three":
+        '''Three cars. Two coming at each other, one perp'''
+        #car 1
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([3,4])
+        dirArr.append(0)
+
+        #car 2
+        ret.append('new car')
+        ret.append((1600.0/vMax,1600.0/vMin))
+        ret.append((1600.5/vMax,1600.5/vMin))
+        tiles.append([4,2])
+        dirArr.append(1)
+
+        #car 3
+        ret.append('new car')
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([2,1])
+        dirArr.append(2)
+
+    if case == "four":
+        '''Four cars going to cross intersection at the same time'''
+        #car 1
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([3,4])
+        dirArr.append(0)
+
+        #car 2
+        ret.append('new car')
+        ret.append((1600.0/vMax,1600.0/vMin))
+        ret.append((1600.5/vMax,1600.5/vMin))
+        tiles.append([4,2])
+        dirArr.append(1)
+
+        #car 3
+        ret.append('new car')
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([2,1])
+        dirArr.append(2)
+
+        #car 4
+        ret.append('new car')
+        ret.append((1600.0/vMax,1600.0/vMin))
+        ret.append((1600.5/vMax,1600.5/vMin))
+        tiles.append([1,3])
+        dirArr.append(3)
+
+    if case == "madeToHit":
+        '''3 cars each lane. All come to intersection at same time'''
+        #lane 1
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([3,4])
+        dirArr.append(0)
+        ret.append('new car')
+        ret.append((1900.05/vMax,1900.05/vMin))
+        ret.append((1900.55/vMax,1900.55/vMin))
+        tiles.append([3,4])
+        dirArr.append(0)
+        ret.append('new car')
+        ret.append((2600.05/vMax,2600.05/vMin))
+        ret.append((2600.55/vMax,2600.55/vMin))
+        tiles.append([3,4])
+        dirArr.append(0)
+
+        #lane 2
+        ret.append('new car')
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([4,2])
+        dirArr.append(1)
+        ret.append('new car')
+        ret.append((1900.05/vMax,1900.05/vMin))
+        ret.append((1900.55/vMax,1900.55/vMin))
+        tiles.append([4,2])
+        dirArr.append(1)
+        ret.append('new car')
+        ret.append((2600.05/vMax,2600.05/vMin))
+        ret.append((2600.55/vMax,2600.55/vMin))
+        tiles.append([4,2])
+        dirArr.append(1)
+
+        #lane 3
+        ret.append('new car')
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([2,1])
+        dirArr.append(2)
+        ret.append('new car')
+        ret.append((1900.05/vMax,1900.05/vMin))
+        ret.append((1900.55/vMax,1900.55/vMin))
+        tiles.append([2,1])
+        dirArr.append(2)
+        ret.append('new car')
+        ret.append((2600.05/vMax,2600.05/vMin))
+        ret.append((2600.55/vMax,2600.55/vMin))
+        tiles.append([2,1])
+        dirArr.append(2)
+
+        #lane 4
+        ret.append('new car')
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([1,3])
+        dirArr.append(3)
+        ret.append('new car')
+        ret.append((1900.05/vMax,1900.05/vMin))
+        ret.append((1900.55/vMax,1900.55/vMin))
+        tiles.append([1,3])
+        dirArr.append(3)
+        ret.append('new car')
+        ret.append((2600.05/vMax,2600.05/vMin))
+        ret.append((2600.55/vMax,2600.55/vMin))
+        tiles.append([1,3])
+        dirArr.append(3)
+
+    if case == "complicated":
+        '''Total mess here. 3+ cars in each lane, 15 total'''
+        #lane 1
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([3,4])
+        dirArr.append(0)
+        ret.append('new car')
+        ret.append((1900.05/vMax,1900.05/vMin))
+        ret.append((1900.55/vMax,1900.55/vMin))
+        tiles.append([3,4])
+        dirArr.append(0)
+        ret.append('new car')
+        ret.append((2600.05/vMax,2600.05/vMin))
+        ret.append((2600.55/vMax,2600.55/vMin))
+        tiles.append([3,4])
+        dirArr.append(0)
+
+        #lane 2
+        ret.append('new car')
+        ret.append((2000.0/vMax,2000.0/vMin))
+        ret.append((2000.5/vMax,2000.5/vMin))
+        tiles.append([4,2])
+        dirArr.append(1)
+        ret.append('new car')
+        ret.append((2400.0/vMax,2400.0/vMin))
+        ret.append((2400.5/vMax,2400.5/vMin))
+        tiles.append([4,2])
+        dirArr.append(1)
+        ret.append('new car')
+        ret.append((2660.0/vMax,2660.0/vMin))
+        ret.append((2660.5/vMax,2660.5/vMin))
+        tiles.append([4,2])
+        dirArr.append(1)
+        ret.append('new car')
+        ret.append((2810.0/vMax,2810.0/vMin))
+        ret.append((2810.5/vMax,2810.5/vMin))
+        tiles.append([4,2])
+        dirArr.append(1)
+
+        #lane 3
+        ret.append('new car')
+        ret.append((1200.05/vMax,1200.05/vMin))
+        ret.append((1200.55/vMax,1200.55/vMin))
+        tiles.append([2,1])
+        dirArr.append(2)
+        ret.append('new car')
+        ret.append((1600.05/vMax,1600.05/vMin))
+        ret.append((1600.55/vMax,1600.55/vMin))
+        tiles.append([2,1])
+        dirArr.append(2)
+        ret.append('new car')
+        ret.append((2300.05/vMax,2300.05/vMin))
+        ret.append((2300.55/vMax,2300.55/vMin))
+        tiles.append([2,1])
+        dirArr.append(2)
+
+        #lane 4
+        ret.append('new car')
+        ret.append((1100.0/vMax,1100.0/vMin))
+        ret.append((1100.5/vMax,1100.5/vMin))
+        tiles.append([1,3])
+        dirArr.append(3)
+        ret.append('new car')
+        ret.append((1400.0/vMax,1400.0/vMin))
+        ret.append((1400.5/vMax,1400.5/vMin))
+        tiles.append([1,3])
+        dirArr.append(3)
+        ret.append('new car')
+        ret.append((1600.0/vMax,1600.0/vMin))
+        ret.append((1600.5/vMax,1600.5/vMin))
+        tiles.append([1,3])
+        dirArr.append(3)
+        ret.append('new car')
+        ret.append((2000.0/vMax,2000.0/vMin))
+        ret.append((2000.5/vMax,2000.5/vMin))
+        tiles.append([1,3])
+        dirArr.append(3)
+        ret.append('new car')
+        ret.append((2400.0/vMax,2400.0/vMin))
+        ret.append((2400.5/vMax,2400.5/vMin))
+        tiles.append([1,3])
+        dirArr.append(3)
 
     if case == "turn":
         '''2 cars, one of them turns'''
-        #car 1 - straight
+        #car 1 - turn
         ret.append((1600.05/vMax,1600.05/vMin))
         ret.append((1600.55/vMax,1600.55/vMin))
         ret.append((1601.05/vMax,1601.05/vMin))
         tiles.append([4,2,1])
         dirArr.append(0)
 
-        #car 2 - turn
+        #car 2 - straight
         ret.append('new car')
         ret.append((1600.0/vMax,1600.0/vMin))
         ret.append((1600.5/vMax,1600.5/vMin))
         tiles.append([3,4])
         dirArr.append(1)
 
-        matrixHeight = 4
-
-    if case == "three":
-        '''Three cars. Two coming at each other, one perp'''
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(0)
-
-        ret.append((1600.0/vMax,1600.0/vMin))
-        ret.append((1600.5/vMax,1600.5/vMin))
-        dirArr.append(1)
-
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(2)
-
-    if case == "four":
-        '''Four cars going to cross intersection at the same time'''
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(0)
-
-        ret.append((1600.0/vMax,1600.0/vMin))
-        ret.append((1600.5/vMax,1600.5/vMin))
-        dirArr.append(1)
-
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(2)
-
-        ret.append((1600.0/vMax,1600.0/vMin))
-        ret.append((1600.5/vMax,1600.5/vMin))
-        dirArr.append(3)
-
-    if case == "madeToHit":
-        '''3 cars each lane. All come to intersection at same time'''
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(0)
-        ret.append((1900.05/vMax,1900.05/vMin))
-        ret.append((1900.55/vMax,1900.55/vMin))
-        dirArr.append(0)
-        ret.append((2600.05/vMax,2600.05/vMin))
-        ret.append((2600.55/vMax,2600.55/vMin))
-        dirArr.append(0)
-
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(1)
-        ret.append((1900.05/vMax,1900.05/vMin))
-        ret.append((1900.55/vMax,1900.55/vMin))
-        dirArr.append(1)
-        ret.append((2600.05/vMax,2600.05/vMin))
-        ret.append((2600.55/vMax,2600.55/vMin))
-        dirArr.append(1)
-
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(2)
-        ret.append((1900.05/vMax,1900.05/vMin))
-        ret.append((1900.55/vMax,1900.55/vMin))
-        dirArr.append(2)
-        ret.append((2600.05/vMax,2600.05/vMin))
-        ret.append((2600.55/vMax,2600.55/vMin))
-        dirArr.append(2)
-
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(3)
-        ret.append((1900.05/vMax,1900.05/vMin))
-        ret.append((1900.55/vMax,1900.55/vMin))
-        dirArr.append(3)
-        ret.append((2600.05/vMax,2600.05/vMin))
-        ret.append((2600.55/vMax,2600.55/vMin))
-        dirArr.append(3)
-
-    if case == "complicated":
-        '''Total mess here. 3+ cars in each lane, 15 total'''
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(0)
-        ret.append((1900.05/vMax,1900.05/vMin))
-        ret.append((1900.55/vMax,1900.55/vMin))
-        dirArr.append(0)
-        ret.append((2600.05/vMax,2600.05/vMin))
-        ret.append((2600.55/vMax,2600.55/vMin))
-        dirArr.append(0)
-
-        ret.append((2000.0/vMax,2000.0/vMin))
-        ret.append((2000.5/vMax,2000.5/vMin))
-        dirArr.append(1)
-        ret.append((2400.0/vMax,2400.0/vMin))
-        ret.append((2400.5/vMax,2400.5/vMin))
-        dirArr.append(1)
-        ret.append((2660.0/vMax,2660.0/vMin))
-        ret.append((2660.5/vMax,2660.5/vMin))
-        dirArr.append(1)
-        ret.append((2810.0/vMax,2810.0/vMin))
-        ret.append((2810.5/vMax,2810.5/vMin))
-        dirArr.append(1)
-
-        ret.append((1200.05/vMax,1200.05/vMin))
-        ret.append((1200.55/vMax,1200.55/vMin))
-        dirArr.append(2)
-        ret.append((1600.05/vMax,1600.05/vMin))
-        ret.append((1600.55/vMax,1600.55/vMin))
-        dirArr.append(2)
-        ret.append((2300.05/vMax,2300.05/vMin))
-        ret.append((2300.55/vMax,2300.55/vMin))
-        dirArr.append(2)
-
-        ret.append((1100.0/vMax,1100.0/vMin))
-        ret.append((1100.5/vMax,1100.5/vMin))
-        dirArr.append(3)
-        ret.append((1400.0/vMax,1400.0/vMin))
-        ret.append((1400.5/vMax,1400.5/vMin))
-        dirArr.append(3)
-        ret.append((1600.0/vMax,1600.0/vMin))
-        ret.append((1600.5/vMax,1600.5/vMin))
-        dirArr.append(3)
-        ret.append((2000.0/vMax,2000.0/vMin))
-        ret.append((2000.5/vMax,2000.5/vMin))
-        dirArr.append(3)
-        ret.append((2400.0/vMax,2400.0/vMin))
-        ret.append((2400.5/vMax,2400.5/vMin))
-        dirArr.append(3)
-
-    return ret,dirArr,tiles,matrixHeight
+    return ret,dirArr,tiles
 
 def getOverpass(t):
     '''Gets the ideal time that each car would go thru the intersection'''
@@ -185,7 +259,7 @@ def getStoplight(t,dirArr,stopTime,case):
     '''0/2 go first, then 1/3'''
     ret = 0
     if case == 'turn':
-        for i in range(5): #TODO: update
+        for i in range(len(t)):
             if i <= 2:
                 '''can't go thru has to wait'''
                 ret += (((t[i][0]//stopTime)+1)*stopTime+10) # +10 is to simulate slowing down and speeding up again
@@ -220,14 +294,14 @@ def getOrder(t):
 
     return ret
 
-def getA(t_bounds,vMax,vMin,height,tiles,numCars):
+def getA(t_bounds,vMax,vMin,tiles,numCars):
     '''Constructs A matrix'''
     width = 0
     for el in t_bounds:
         if not el == "new car":
             width += 1
 
-    A = np.zeros((height,width))
+    A = []
     currRow = 0
 
     # Constraint 3: Correct way of crossing the intersection (doesn't go backwards)
@@ -237,21 +311,23 @@ def getA(t_bounds,vMax,vMin,height,tiles,numCars):
             x += 1
         else:
             c = currRow+x
-            A[currRow][c] = 1
-            A[currRow][c+1] = -1
+            row = [0] * width
+            row[c] = 1
+            row[c+1] = -1
+            A.append(row)
             currRow += 1
 
     # Constraint 4: tile can't be occupied by multiple cars at the time
-    cArr = []
     for i in range(len(tiles)):
         for j in range(i+1,len(tiles)):
             for k in range(len(tiles[i])):
                 if tiles[i][k] in tiles[j]:
-                    A[currRow][k] = 1
-                    A[currRow][tiles[j][tiles[j].index(tiles[i][k])]] = -1
+                    row = [0] * width
+                    row[k] = 1
+                    row[tiles[j][tiles[j].index(tiles[i][k])]] = -1
+                    A.append(row)
                     currRow += 1
 
-    print(A)
     return A
 
 def getB(t_bounds,vMax,vMin,tiles,numCars):
@@ -264,17 +340,15 @@ def getB(t_bounds,vMax,vMin,tiles,numCars):
         if t_bounds[r] == "new car":
             x += 1
         else:
-            b.append(0) #TODO: maybe -1
+            b.append(0)
 
     # Constraint 4: tile can't be occupied by multiple cars at the time
-    cArr = []
     for i in range(len(tiles)):
         for j in range(i+1,len(tiles)):
             for k in range(len(tiles[i])):
                 if tiles[i][k] in tiles[j]:
                     b.append(-1)
 
-    print(b)
     return b
 
 def printCarTimes(t,dirs,t_bounds):
@@ -289,14 +363,14 @@ def testOneCase(cars,case):
     lanes = 1
     vMax = 60
     vMin = 20
-    t_bounds,dirArr,tiles,matrixHeight = makeTBounds(vMax,vMin,case)
+    t_bounds,dirArr,tiles = makeTBounds(vMax,vMin,case)
 
     #get A matrix and b vector
-    A = getA(t_bounds,vMax,vMin,matrixHeight,tiles,numCars)
+    A = getA(t_bounds,vMax,vMin,tiles,numCars)
     b = getB(t_bounds,vMax,vMin,tiles,numCars)
 
-    #cleanup t_bounds
-    t_bounds.remove('new car')
+    #clean up t_bounds, remove "new car" identifiers
+    t_bounds = list(filter(lambda a: a != "new car", t_bounds))
     print(t_bounds)
 
     #get c vector
@@ -353,11 +427,11 @@ def plot(t,stopTimes):
     ax.set_title('Time Lost With Intersection Over Overpass')
     ax.set_xticks(ind+width/2)
     ax.set_xticklabels(('Two cars',
-                        'Turning cars'
                         'Three Cars',
                         'Four Cars',
                         'Cars Made to hit',
-                        'Real Life Complex Intersection'))
+                        'Real Life Complex Intersection',
+                        'Turning cars'))
 
     rects = ax.plot([-.2, 4.6], [thresh, thresh], "k--")
 
@@ -367,11 +441,12 @@ def plot(t,stopTimes):
     plt.show()
 
 def main():
-    cars = [2,2]#,3,4,12,15]
-    case = ["simple","turn"]#,"three","four","madeToHit","complicated"]
+    cars = [2,3,4,12,15,2]
+    case = ["simple","three","four","madeToHit","complicated","turn"]
     times = []
     for i in range(len(cars)):
         times.append(testOneCase(cars[i],case[i]))
+    print(len(times))
     normTimes,stopTimes = makeNorm(times)
     plot(normTimes,stopTimes)
 
