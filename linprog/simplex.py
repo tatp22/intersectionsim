@@ -371,7 +371,6 @@ def testOneCase(cars,case):
 
     #clean up t_bounds, remove "new car" identifiers
     t_bounds = list(filter(lambda a: a != "new car", t_bounds))
-    print(t_bounds)
 
     #get c vector
     c = np.zeros(len(t_bounds))
@@ -424,16 +423,16 @@ def plot(t,stopTimes):
     rects4 = ax.bar(ind+width,above_stop, width, color="y",bottom=below_threshold)
 
     ax.set_ylabel('Fraction Of Time Over Overpass')
-    ax.set_title('Time Lost With Intersection Over Overpass')
+    ax.set_title('Time Lost With Intersection Over Overpass (No. of Cars)')
     ax.set_xticks(ind+width/2)
-    ax.set_xticklabels(('Two cars',
-                        'Three Cars',
-                        'Four Cars',
-                        'Cars Made to hit',
-                        'Real Life Complex Intersection',
-                        'Turning cars'))
+    ax.set_xticklabels(('Two cars (2)',
+                        'Three Cars (3)',
+                        'Four Cars (4)',
+                        'Cars Made to hit (12)',
+                        'Real Life Complex Intersection (15)',
+                        'Turning cars (2)'))
 
-    rects = ax.plot([-.2, 4.6], [thresh, thresh], "k--")
+    rects = ax.plot([-.2, 5.6], [thresh, thresh], "k--")
 
     ax.legend((rects[0], rects2[0], rects4[0]),
               ("Overpass Effeciency", 'AI Intersection','Simulated Stoplight'))
@@ -446,7 +445,6 @@ def main():
     times = []
     for i in range(len(cars)):
         times.append(testOneCase(cars[i],case[i]))
-    print(len(times))
     normTimes,stopTimes = makeNorm(times)
     plot(normTimes,stopTimes)
 
