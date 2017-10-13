@@ -416,7 +416,7 @@ def plot(t,stopTimes):
     below_stop = np.minimum(stopVal, thresh)
 
     ind = np.arange(N)
-    width = .4
+    width = .33
     fig, ax = plt.subplots()
     rects1 = ax.bar(ind, below_threshold, width, color="r")
     rects2 = ax.bar(ind, above_threshold, width, color="r",bottom=below_threshold)
@@ -431,9 +431,9 @@ def plot(t,stopTimes):
                         'Four Cars',
                         'Cars Made to hit',
                         'Real Life Complex Intersection',
-                        'Turning cars'))
+                        'Turning car'))
 
-    rects = ax.plot([-.2, 4.6], [thresh, thresh], "k--")
+    rects = ax.plot([-.2, 5.9], [thresh, thresh], "k--")
 
     ax.legend((rects[0], rects2[0], rects4[0]),
               ("Overpass Effeciency", 'AI Intersection','Simulated Stoplight'))
@@ -446,7 +446,6 @@ def main():
     times = []
     for i in range(len(cars)):
         times.append(testOneCase(cars[i],case[i]))
-    print(len(times))
     normTimes,stopTimes = makeNorm(times)
     plot(normTimes,stopTimes)
 
